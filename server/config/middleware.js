@@ -1,7 +1,9 @@
 var morgan      = require('morgan'), // used for logging incoming request
     bodyParser  = require('body-parser'),
-    helpers     = require('./helpers.js'); // our custom middleware
-    path        = require('path');
+    helpers     = require('./helpers.js'), // our custom middleware
+    path        = require('path'),
+    Link        = require('../links/linkModel'),
+    linksController  = require('../links/linkController.js');
 
 
 module.exports = function (app, express) {
@@ -13,7 +15,6 @@ module.exports = function (app, express) {
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../../client'));
-
 
   app.use('/api/users', userRouter); // use user router for all user request
 
@@ -27,9 +28,38 @@ module.exports = function (app, express) {
   require('../users/userRoutes.js')(userRouter);
   require('../links/linkRoutes.js')(linkRouter);
 
-  app.use('/*', function(req, res) {
+  app.get('/favicon.ico', function(req, res) {
+    res.set('Content-Type', 'image/x-icon');
+    res.status(200).end();
+  });
+
+  app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, '../../client/index.html'));
   });
+
+
+  // app.param('code', linksController.findUrl);
+  // app.get('/:code', linksController.navToLink);
+
+
+  // app.get('/*', function(req, res) {
+  //   Link.findOne({code: req.params[0]}, function(error,link) {
+  //     if (!link) {
+  //       res.redirect('/');
+  //     } else {
+  //       link.visits++;
+  //       link.save(function(err) {
+  //         if(err){
+  //           helpers.errorHandler(err, req, res);
+  //         } else {
+  //           return res.redirect(link.url);
+  //         }
+  //       });
+  //     }
+  //   });
+  // });
+
+
   // app.use('/*', function(req, res) {
   //   res.redirect('/#' + req.baseUrl);
   // });

@@ -5,6 +5,7 @@ var Link    = require('./linkModel.js'),
 
 module.exports = {
   findUrl: function (req, res, next, code) {
+    console.log('in findUrl');
     var findLink = Q.nbind(Link.findOne, Link);
     findLink({code: code})
       .then(function (link) {
@@ -21,15 +22,16 @@ module.exports = {
   },
 
   allLinks: function (req, res, next) {
-  var findAll = Q.nbind(Link.find, Link);
+    console.log('in allLinks');
+    var findAll = Q.nbind(Link.find, Link);
 
-  findAll({})
-    .then(function (links) {
-      res.json(links);
-    })
-    .fail(function (error) {
-      next(error);
-    });
+    findAll({})
+      .then(function (links) {
+        res.json(links);
+      })
+      .fail(function (error) {
+        next(error);
+      });
   },
 
   newLink: function (req, res, next) {
@@ -55,7 +57,7 @@ module.exports = {
           var newLink = {
             url: url,
             visits: 0,
-            base_url: req.headers.origin,
+            base_url: req.headers.origin + '/api/links',
             title: title
           };
           return createLink(newLink);
@@ -72,6 +74,7 @@ module.exports = {
   },
 
   navToLink: function (req, res, next) {
+    console.log('in navToLink');
     var link = req.navLink;
     link.visits++;
     link.save(function (err, savedLink) {

@@ -5,4 +5,8 @@
       <li><a href='/shorten' class='create'>Shorten</a></li>
     </ul>
   </div>
+    <form ng-controller='ShortenController'>
+      <input class='text' type='text' ng-model='url' name='url'>
+      <input type='submit' ng-click='addLink(url); url=""' value='Shorten'>
+    </form>
 </div>

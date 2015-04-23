@@ -5,4 +5,13 @@
       <li><a href='/shorten' class='create'>Shorten</a></li>
     </ul>
   </div>
+  <div>
+    <div ng-repeat="link in data.links" class='info'>
+      <div class='visits'><span class='count'>{{link.visits}}</span> Visits</div>
+      <div class='title'>{{link.title}}</div>
+      <div class='original'>{{link.url}}</div>
+      <!-- <a ng-href='{{link.base_url}}/{{link.code}}'>{{link.base_url}}/{{link.code}}</a> -->
+      <div ng-click="redirect(link.base_url,link.code )">{{link.base_url}}/{{link.code}}</div>
+    </div>
+  </div>
 </div>
