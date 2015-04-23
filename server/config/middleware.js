@@ -1,6 +1,7 @@
 var morgan      = require('morgan'), // used for logging incoming request
     bodyParser  = require('body-parser'),
     helpers     = require('./helpers.js'); // our custom middleware
+    path        = require('path');
 
 
 module.exports = function (app, express) {
@@ -25,4 +26,15 @@ module.exports = function (app, express) {
   // inject our routers into their respective route files
   require('../users/userRoutes.js')(userRouter);
   require('../links/linkRoutes.js')(linkRouter);
+
+  app.use('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../client/index.html'));
+  });
+  // app.use('/*', function(req, res) {
+  //   res.redirect('/#' + req.baseUrl);
+  // });
+
+  // app.use('/#*', function(req, res) {
+  //   res.sendFile(path.join(__dirname, '../../client/index.html'));
+  // });
 };
