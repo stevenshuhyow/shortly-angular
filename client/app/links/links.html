@@ -7,7 +7,10 @@
     </ul>
   </div>
   <div>
-    <div ng-repeat="link in data.links" class='info link'>
+    <div>
+      <input class="filter" ng-model="query" placeholder="Filter">
+    </div>
+    <div ng-repeat="link in data.links | filter: query" class="info link">
       <img src="/assets/redirect_icon.png">
       <div class='visits'><span class='count'>{{link.visits}}</span> Visits</div>
       <div class='title'>{{link.title}}</div>

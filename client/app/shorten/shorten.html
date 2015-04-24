@@ -6,10 +6,12 @@
       <li><a href='#/signout' ng-click='signout()' class='signout'>Signout</a></li>
     </ul>
   </div>
+  <div>
     <form>
       <input class='text' type='text' ng-model='url' name='url'>
       <input type='submit' ng-click='addLink(url); url=""' value='Shorten'>
       <img ng-show="loading && !notAvailable" src="/assets/spiffygif_46x46.gif">
     </form>
     <div ng-show="notAvailable">NOT A VAILD URL</div>
+  </div>
 </div>
