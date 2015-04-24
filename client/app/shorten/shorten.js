@@ -1,6 +1,7 @@
 angular.module('shortly.shorten', [])
 
-.controller('ShortenController', ['$scope', '$location', 'Links', function ($scope, $location, Links) {
+
+.controller('ShortenController', ['$scope', '$location', 'Links', 'Auth', function ($scope, $location, Links, Auth) {
   $scope.link = {};
   $scope.loading = false;
   $scope.notAvailable = false;
@@ -12,5 +13,9 @@ angular.module('shortly.shorten', [])
     }).catch(function(){
       $scope.notAvailable = true;
     });
+  };
+
+  $scope.signout = function(){
+    Auth.signout();
   };
 }]);

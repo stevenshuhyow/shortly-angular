@@ -1,6 +1,6 @@
 angular.module('shortly.links', [])
 
-.controller('LinksController', ['$scope', 'Links', function ($scope, Links) {
+.controller('LinksController', ['$scope', 'Links', 'Auth', function ($scope, Links, Auth) {
   // Your code here
   $scope.data = {};
   $scope.getLinks = function(){
@@ -9,7 +9,9 @@ angular.module('shortly.links', [])
     });
   };
   $scope.getLinks();
-  $scope.redirect = function(baseUrl, code){
-    window.location = baseUrl + '/' + code;
+
+  $scope.signout = function(){
+    Auth.signout();
   };
+
 }]);
