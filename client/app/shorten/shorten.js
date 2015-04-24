@@ -1,11 +1,16 @@
 angular.module('shortly.shorten', [])
 
-.controller('ShortenController', ['$scope', '$http', '$location', 'Links', function ($scope, $http, $location, Links) {
+.controller('ShortenController', ['$scope', '$location', 'Links', function ($scope, $location, Links) {
   $scope.link = {};
+  $scope.loading = false;
+  $scope.notAvailable = false;
   $scope.addLink = function(url) {
-    $http.post('/api/links', {url: url}).success(function(data) {
-      console.log('data returned from POST to /api/links',data);
-      // $scope.link
+    $scope.loading = true;
+    Links.createNewLink(url).then(function(){
+      $scope.loading = false;
+      $location.path('/links');
+    }).catch(function(){
+      $scope.notAvailable = true;
     });
   };
 }]);
